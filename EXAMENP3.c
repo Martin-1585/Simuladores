@@ -5,6 +5,7 @@
 */
 //Declaracion de librerias
 #include <stdio.h>
+#include <ctype.h>
 //Variables fijas
 #define BASICA 2000
 #define INTERMEDIA 3000
@@ -13,9 +14,10 @@
 
 int main(){
     //Declaracion de variables
-    int dia, mes, year, edad, historial_medico, incremento, incremento_cronica;
+    int dia, mes, year, edad, historial_medico, incremento;
     float poliza;
     char cobertura, respuesta;
+    int dia_actual=29, mes_actual_= 1;
     //Presentación del programa
     printf("\t********************************************\n");
     printf("\t           Simulador de cobertura\n");
@@ -25,32 +27,41 @@ int main(){
         do{
             printf("Ingrese el tipo de cobertura(B para Basica, I para intermedia, C para Completa)\n");
             scanf(" %c", &cobertura);
-            if (cobertura != 'B' && cobertura != 'b' && cobertura != 'I' && cobertura != 'i' && cobertura != 'C' && cobertura != 'c'){
+            cobertura=toupper(cobertura);
+            if (cobertura != 'B' && cobertura != 'I' && cobertura != 'C'){
                printf("Cobertura no valida\n");
             }
-        } while (cobertura != 'B' && cobertura != 'b' && cobertura != 'I' && cobertura != 'i' && cobertura != 'C' && cobertura != 'c');
+        } while (cobertura != 'B' && cobertura != 'I' && cobertura != 'C' );
         //Se solicita al usuario ingresar su fecha de nacimiento
         do{
             printf("Ingrese su fecha de nacimiento\n");
             scanf("%d %d %d", &dia, &mes, &year);
-            if (dia<0 || dia>31 || mes <0 || mes >12 || year<1900 || year>2024){
-                printf("Fecha no valida\n");
+            if (dia<0 || dia>31){
+                printf("Dia no valido\n");
+            } 
+            if (mes <0 || mes >12){
+                printf("Mes no valido\n");
+            }
+            if (year<1925 || year>2025){
+                printf("Anio no valido\n");
             }
         } while (dia<0 || dia>31 || mes <0 || mes >12 || year<1900 || year>2025);
+        edad=year_-year;
+        if (mes > mes_actual_ || (mes==mes_actual_ && (dia>dia_actual))){
+            edad--;
+        }
+        printf("Tiene de edad: %d\n", edad);
         //Se le pregunta al usuario cual es su historial medico
         do{
             printf("Tiene historial con enfermedades cronicas(1. Si/ 0. No)\n");
             scanf("%d", &historial_medico);
             if (historial_medico<0 || historial_medico>1){
-                printf("Dato no validSo\n");
+                printf("Dato no valido\n");
             }
         } while (historial_medico<0 || historial_medico>1);
-        //Se 
-        edad=year_-year;
         //En base a la corbetura se comienza a calcular
         switch (cobertura){
         case 'B':
-        case 'b':
             //Si el historial medico es 1 se incrementa un 30%
             if (historial_medico==1){
                 incremento=BASICA*0.30;
@@ -64,7 +75,6 @@ int main(){
             printf("El costo de la poliza de salud es: %.2f\n", poliza);
             break;
         case 'I':
-        case 'i':
             //Si el historial medico es 1 se incrementa un 30%
             if (historial_medico==1){
                 incremento=INTERMEDIA*0.30;
@@ -79,7 +89,6 @@ int main(){
             break;
 
         case 'C':
-        case 'c':
             //Si el historial medico es 1 se incrementa un 30%
             if (historial_medico==1){ 
                 incremento=COMPLETA*0.30;
@@ -101,11 +110,12 @@ int main(){
             //Se le pregunta al usuario si desea ingresar otros datos
             printf("Desea calcular otra poliza (S/N)\n"); 
             scanf(" %c", &respuesta); 
-            if (respuesta != 'S' && respuesta != 's' && respuesta !='N' && respuesta != 'n'){ //Si la respuesta no es S o N se muestra un rechazo de datos
+            respuesta=toupper(respuesta);
+            if (respuesta != 'S' && respuesta !='N'){ //Si la respuesta no es S o N se muestra un rechazo de datos
                 printf("Dato no valido, ingrese nuevamente\n");
             }
-        } while (respuesta != 'S' && respuesta != 's' && respuesta !='N' && respuesta != 'n'); 
-    } while (respuesta=='S' || respuesta=='s'); //El programa termina cuando el usuario ingresa N
+        } while (respuesta != 'S' && respuesta !='N'); 
+    } while (respuesta=='S'); //El programa termina cuando el usuario ingresa N
     printf("\tFIN DEL PROGRAMA\n");
     
     return 0;
