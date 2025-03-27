@@ -1,5 +1,4 @@
-/* Taller 1 
-Materia: Programación I
+/* Taller 1 - Programación I
 Docente: Bernarda Sandoval
 Nombres: Martin Olalla y Ihoshua Teran 
 Fecha: 26/03/2025
@@ -21,31 +20,29 @@ int main() {
     printf("\t Simulador de un comerciante \n");
     printf("\t*****************************\n");
     do{
-        printf("Ingrese el ID del producto (4 digitos): ");
+        printf("Ingrese el ID del producto (4 digitos): "); //Se solicita el ID del producto a vender (Solo digitos)
         valido = scanf("%d", &id);
         if (valido != 1 || id < 1000 || id > 9999){
-           printf("ID no valido\n");
+           printf("ID no valido\n"); //Mensaje de rechazo de datos 
            fflush(stdin); //Se usa fflush para limpiar el buffer de scanf
         }
     } while (valido != 1 || id < 1000 || id > 9999); //Ciclo do-while para validar que los datos ingresados en ID sean validos
-    //Se debe limpiar el buffer para que fgets funcione
-    fflush(stdin); 
-    printf("Ingrese el nombre del producto: ");
-    fgets(nombre, sizeof(nombre), stdin);
+    fflush(stdin); //Se debe limpiar el buffer para que fgets funcione
+    printf("Ingrese el nombre del producto: "); //Se solicita el nombre del producto
+    fgets(nombre, sizeof(nombre), stdin); //Función fgets para registrar el nombre 
     do{
-        printf("Ingrese la cantidad inicial en stock: ");
+        printf("Ingrese la cantidad inicial en stock: "); //Se solicita la cantidad inicial de stock del producto
         valido = scanf("%d", &stock);
         if (valido != 1 || stock <= 0){
-            printf("Stock no valido\n");
+            printf("Stock no valido\n"); //Mensaje de rechazo de datos
             fflush(stdin); //Se usa fflush para limpiar el buffer de scanf
         }
     } while (valido !=1 || stock <= 0); //Ciclo do-while para validar que los datos ingresados en stock sean validos
-    
     do{
-        printf("Ingrese el precio unitario del producto: $ ");
+        printf("Ingrese el precio unitario del producto: $ "); //S solicita el precio unitario del producto
         valido = scanf("%f", &precio);
         if (valido != 1 || precio < 0){
-            printf("Precio no valido\n");
+            printf("Precio no valido\n"); //Mensaje de rechazo de datos
             fflush(stdin); //Se usa fflush para limpiar el buffer de scanf
         }
     } while (valido !=1 || precio < 0); //Ciclo de-while para validar que los datos ingresados en precio sean validos
@@ -78,17 +75,14 @@ int main() {
                     if (valido != 1 || cantidad < 1){
                         printf("La cantidad a vender debe ser al menos una unidad, por favor ingrese nuevamente\n"); //Se muestra este mensaje solo si la cantidad es menor a 1 o invalida
                         fflush(stdin); //Se debe limpiar el buffer de scanf para el nuevo ingreso de datos
-                    } 
-                } while (valido != 1 || cantidad < 1); //Ciclo do-while que valida que no se ingresen caracteres ni numeros negativos
-
-                while (cantidad > stock){ //Si el usuario ingresa un cantidad superior al stock entra en un bucle While restringir el paso de dichos datos
-                    if (cantidad > stock){
-                    printf("La cantidad a vender supera al stock, por favor ingrese nuevamente\n");
-                    scanf("%d", &cantidad);
-                    fflush(stdin); // Se debe limpiar el buffer de scanf para aceptar nuevos datos
+                    } else if (cantidad > stock){
+                        printf("La cantidad a vender supera al stock, por favor ingrese nuevamente\n");
+                        fflush(stdin); // Se debe limpiar el buffer de scanf para aceptar nuevos datos
+                    } else {
+                        break;
                     }
-                }
-                ventas = ((float)cantidad * (float)precio); //Para calcular las ventas se necesita que se multiplique la cantidad de unidades a vender por el precio unitario
+                } while (1); //Ciclo do-while que valida que no se ingresen caracteres ni numeros negativos
+                ventas = (cantidad * precio); //Para calcular las ventas se necesita que se multiplique la cantidad de unidades a vender por el precio unitario
                 total_ganancias+=ventas; //Se acumula los valores de las ventas en la variable total_ganancias
                 stock -= cantidad; //Se realiza una resta del stock después de cada venta
                 printf("Venta realizada. Con una ganancia de $ %.2f\n", ventas); //Mensaje informando cuanto se estima de ganancia  
@@ -101,14 +95,16 @@ int main() {
                     if (valido != 1 || cantidad < 0){
                         printf("\nLa cantidad ingresada no es valida, ingrese nuevamente\n");
                         fflush(stdin); //Se debe limpiar el buffer de scanf para permitir el ingreso de nuevos datos
+                    } else {
+                        break;
                     }
-                } while (valido != 1 || cantidad < 0); //Ciclo do-while para validar que los datos no sean ni caracteres ni menores a 0
+                } while (1); //Ciclo do-while para validar que los datos no sean ni caracteres ni menores a 0
                 if (cantidad == 0){ 
-                    printf("\nNo se ha aumentado stock\n"); //Si la cantidad ingresada es 0 se despliega un mensaje informando esto
-                } else {
-                    stock+=cantidad; //Usando la variable stock como acumulador se suma la cantidad de reabastecimiento
-                    printf("\nStock actualizado. Se tiene %d unidades\n", stock); //Mensaje mostrando el nuevo stock
-                }
+                    printf("\nNo se ha aumentado stock\n"); //Si la cantidad ingresada es 0 se despliega un mensaje y sale de la opción 
+                    break;
+                } 
+                stock+=cantidad; //Usando la variable stock como acumulador se suma la cantidad de reabastecimiento
+                printf("\nStock actualizado. Se tiene %d unidades\n", stock); //Mensaje mostrando el nuevo stock
                 break;
             case 3:
                 printf("\n\tInformación del producto:\n"); //Se muestra como titulo con \t para dar una impresión más estética
