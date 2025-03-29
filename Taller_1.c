@@ -70,13 +70,13 @@ int main() {
                 }
                 printf("\n\x1B[0mSu stock actual es de %d unidades\n", stock); //Se despliega la cantidad de stock actual
                 do{
-                    printf("\x1B[0mIngrese el porcentaje descuento a aplicar al producto: ");
-                    valido = scanf("%f", &descuento);
+                    printf("\x1B[0mIngrese el porcentaje descuento a aplicar al producto: %% "); //Se solicita al usuario ingresar un porcentaje de descuanto en cada venta
+                    valido = scanf("%f", &descuento); //Con el pointer int se determina que los valores a ingresar solo sean numeros
                     if (valido != 1){
-                        printf("\x1B[31mDatos ingresados no válidos\n");
+                        printf("\x1B[31mDatos ingresados no válidos\n"); //Mensaje de rechazo en caso del ingreso de caracteres
                         fflush(stdin);
                     } else if (descuento < 0 || descuento > 50){
-                        printf("\x1B[33mDescuento no valido\n");
+                        printf("\x1B[33mDescuento no valido (Máximo 50%%)\n"); //Mensaje de rechazo en caso de un descuento negativo o superior a 50
                         fflush(stdin);
                     } else {
                         break;
@@ -96,10 +96,10 @@ int main() {
                     }
                 } while (1); //Ciclo do-while que valida que no se ingresen caracteres ni numeros negativos
                 if (descuento > 0){
-                    ventas = (cantidad * precio);
-                    ventas_des =((cantidad * precio) * (descuento/100));
-                    ventas = ventas - ventas_des; 
-                    printf("\x1B[0mDio un ahorro de %.2f\n", ventas_des);
+                    ventas = (cantidad * precio); //Se calcula el valor inicial de las ventas multiplicando el precio por la cantidad
+                    ventas_des =(ventas * (descuento/100)); //Se calcula el descuento multiplicando ventas por el descuento
+                    ventas = ventas - ventas_des; //Para obtener el valor real del descuento se realiza una resta entra el valor de ventas y descuento
+                    printf("\x1B[0mDio un ahorro de %.2f\n", ventas_des); //Se muestra el ahorro que se da al cliente
                 } else {
                     ventas = (cantidad * precio);  //Para calcular las ventas se necesita que se multiplique la cantidad de unidades a vender por el precio unitario
                 }
