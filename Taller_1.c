@@ -16,80 +16,80 @@ int main() {
     float precio, total_ganancias = 0, ventas, descuento, ventas_des;
     char nombre[30];
     //Presentación del programa
-    printf("\t*****************************\n");
-    printf("\t Simulador de un comerciante \n");
-    printf("\t*****************************\n");
+    printf("\t\x1B[34m*****************************\n");
+    printf("\t\x1B[35m Simulador de un comerciante \n");
+    printf("\t\x1B[34m*****************************\n");
     do{
-        printf("Ingrese el ID del producto (4 digitos): "); //Se solicita el ID del producto a vender (Solo digitos)
+        printf("\x1B[0mIngrese el ID del producto (4 digitos): "); //Se solicita el ID del producto a vender (Solo digitos)
         valido = scanf("%d", &id);
         if (valido != 1 || id < 1000 || id > 9999){
-           printf("ID no valido\n"); //Mensaje de rechazo de datos 
+           printf("\x1B[33mID no valido\n"); //Mensaje de rechazo de datos 
            fflush(stdin); //Se usa fflush para limpiar el buffer de scanf
         }
     } while (valido != 1 || id < 1000 || id > 9999); //Ciclo do-while para validar que los datos ingresados en ID sean validos
     fflush(stdin); //Se debe limpiar el buffer para que fgets funcione
-    printf("Ingrese el nombre del producto: "); //Se solicita el nombre del producto
+    printf("\x1B[0mIngrese el nombre del producto: "); //Se solicita el nombre del producto
     fgets(nombre, sizeof(nombre), stdin); //Función fgets para registrar el nombre 
     do{
-        printf("Ingrese la cantidad inicial en stock: "); //Se solicita la cantidad inicial de stock del producto
+        printf("\x1B[0mIngrese la cantidad inicial en stock: "); //Se solicita la cantidad inicial de stock del producto
         valido = scanf("%d", &stock);
         if (valido != 1 || stock <= 0){
-            printf("Stock no valido\n"); //Mensaje de rechazo de datos
+            printf("\x1B[33mStock no valido\n"); //Mensaje de rechazo de datos
             fflush(stdin); //Se usa fflush para limpiar el buffer de scanf
         }
     } while (valido !=1 || stock <= 0); //Ciclo do-while para validar que los datos ingresados en stock sean validos
     do{
-        printf("Ingrese el precio unitario del producto: $ "); //S solicita el precio unitario del producto
+        printf("\x1B[0mIngrese el precio unitario del producto: $ "); //S solicita el precio unitario del producto
         valido = scanf("%f", &precio);
         if (valido != 1 || precio < 0){
-            printf("Precio no valido\n"); //Mensaje de rechazo de datos
+            printf("\x1B[33mPrecio no valido\n"); //Mensaje de rechazo de datos
             fflush(stdin); //Se usa fflush para limpiar el buffer de scanf
         }
     } while (valido !=1 || precio < 0); //Ciclo de-while para validar que los datos ingresados en precio sean validos
 
     do {
         //Se presenta un menu de las posibles opciones que puede realizar el comerciante
-        printf("\n\tMenu de Opciones\n");
-        printf("1. Vender producto\n");
-        printf("2. Reabastecer producto\n");
-        printf("3. Mostrar información del producto\n");
-        printf("4. Mostrar total de ganancias\n");
-        printf("5. Salir\n");
-        printf("Seleccione una opcion: ");
+        printf("\n\t\x1B[0mMenu de Opciones\n");
+        printf("\x1B[0m1. Vender producto\n");
+        printf("\x1B[0m2. Reabastecer producto\n");
+        printf("\x1B[0m3. Mostrar información del producto\n");
+        printf("\x1B[0m4. Mostrar total de ganancias\n");
+        printf("\x1B[0m5. Salir\n");
+        printf("\x1B[0mSeleccione una opcion: ");
         valido = scanf("%d", &opcion);
         if (valido != 1){ //Con este condicional se valida que los datos ingresados sean digitos y no caracteres
-            printf("\nOpción inválida. Intente nuevamente.\n");
+            printf("\n\x1B[33mOpción inválida. Intente nuevamente.\n");
             fflush(stdin); //Se debe limpiar el buffer de scanf para que se permita la entrada de un nuevo dato
             continue; //La función continue permite que el programa continue
         }
         switch(opcion) {
             case 1:
                 if (stock == 0){ //Si el usuario ya vendio todo su stock se despliega un mensaje que recomeinda reabastecer
-                    printf("\nNo hay suficiente stock, por favor reabastecer\n");
+                    printf("\n\x1B[33mNo hay suficiente stock, por favor reabastecer\n");
                     break;
                 }
-                printf("\nSu stock actual es de %d unidades\n", stock); //Se despliega la cantidad de stock actual
+                printf("\n\x1B[0mSu stock actual es de %d unidades\n", stock); //Se despliega la cantidad de stock actual
                 do{
-                    printf("Ingrese el porcentaje descuento a aplicar al producto: ");
+                    printf("\x1B[0mIngrese el porcentaje descuento a aplicar al producto: ");
                     valido = scanf("%f", &descuento);
                     if (valido != 1){
-                        printf("Datos ingresados no válidos\n");
+                        printf("\x1B[31mDatos ingresados no válidos\n");
                         fflush(stdin);
                     } else if (descuento < 0 || descuento > 50){
-                        printf("Descuento no valido\n");
+                        printf("\x1B[33mDescuento no valido\n");
                         fflush(stdin);
                     } else {
                         break;
                     }
                 } while (1);
                 do{
-                    printf("\nIngrese la cantidad a vender: ");
+                    printf("\n\x1B[0mIngrese la cantidad a vender: ");
                     valido = scanf("%d", &cantidad);
                     if (valido != 1 || cantidad < 1){
-                        printf("La cantidad a vender debe ser al menos una unidad, por favor ingrese nuevamente\n"); //Se muestra este mensaje solo si la cantidad es menor a 1 o invalida
+                        printf("\x1B[31mLa cantidad a vender debe ser al menos una unidad, por favor ingrese nuevamente\n"); //Se muestra este mensaje solo si la cantidad es menor a 1 o invalida
                         fflush(stdin); //Se debe limpiar el buffer de scanf para el nuevo ingreso de datos
                     } else if (cantidad > stock){
-                        printf("La cantidad a vender supera al stock, por favor ingrese nuevamente\n");
+                        printf("\x1B[33mLa cantidad a vender supera al stock, por favor ingrese nuevamente\n");
                         fflush(stdin); // Se debe limpiar el buffer de scanf para aceptar nuevos datos
                     } else {
                         break; //Si el usuario ingresa una cantidad valida se rompe la estructura repetitiva y se continua a la siguiente línea 
@@ -99,48 +99,48 @@ int main() {
                     ventas = (cantidad * precio);
                     ventas_des =((cantidad * precio) * (descuento/100));
                     ventas = ventas - ventas_des; 
-                    printf("Dio un ahorro de %.2f\n", ventas_des);
-                } else if (descuento == 0){
+                    printf("\x1B[0mDio un ahorro de %.2f\n", ventas_des);
+                } else {
                     ventas = (cantidad * precio);  //Para calcular las ventas se necesita que se multiplique la cantidad de unidades a vender por el precio unitario
                 }
                 total_ganancias+=ventas; //Se acumula los valores de las ventas en la variable total_ganancias
                 stock -= cantidad; //Se realiza una resta del stock después de cada venta
-                printf("Venta realizada. Con una ganancia de $ %.2f\n", ventas); //Mensaje informando cuanto se estima de ganancia  
-                printf("Quedan %d unidades en stock\n", stock); //Mensaje informando cuantas unidades de stock quedan    
+                printf("\x1B[0mVenta realizada. Con una ganancia de $ %.2f\n", ventas); //Mensaje informando cuanto se estima de ganancia  
+                printf("\x1B[0mQuedan %d unidades en stock\n", stock); //Mensaje informando cuantas unidades de stock quedan    
                 break;
             case 2:
                 do{
-                    printf("\nIngrese la cantidad a agregar al stock: ");
+                    printf("\n\x1B[0mIngrese la cantidad a agregar al stock: ");
                     valido = scanf("%d", &cantidad);
                     if (valido != 1 || cantidad < 0){
-                        printf("\nLa cantidad ingresada no es valida, ingrese nuevamente\n");
+                        printf("\n\x1B[33mLa cantidad ingresada no es valida, ingrese nuevamente\n");
                         fflush(stdin); //Se debe limpiar el buffer de scanf para permitir el ingreso de nuevos datos
                     } else {
                         break; //Si el usuario ingresa una cantidad valida se rompe la estructura repetitiva y se continua a la siguiente línea 
                     }
                 } while (1); //Ciclo do-while para validar que los datos no sean ni caracteres ni menores a 0
                 if (cantidad == 0){ 
-                    printf("\nNo se ha aumentado stock\n"); //Si la cantidad ingresada es 0 se despliega un mensaje y sale de la opción 
+                    printf("\n\x1B[0mNo se ha aumentado stock\n"); //Si la cantidad ingresada es 0 se despliega un mensaje y sale de la opción 
                     break;
                 } 
                 stock+=cantidad; //Usando la variable stock como acumulador se suma la cantidad de reabastecimiento
-                printf("\nStock actualizado. Se tiene %d unidades\n", stock); //Mensaje mostrando el nuevo stock
+                printf("\n\x1B[0mStock actualizado. Se tiene %d unidades\n", stock); //Mensaje mostrando el nuevo stock
                 break;
             case 3:
-                printf("\n\tInformación del producto:\n"); //Se muestra como titulo con \t para dar una impresión más estética
-                printf("ID: %d\n", id); //Se muestra el ID ingresado
-                printf("Nombre: %s", nombre); //Se muestra el nombre ingresado
-                printf("Stock disponible: %d\n", stock); //Se muestra el stock actual
-                printf("Precio unitario: $ %.2f\n", precio); //Se muestra el precio uinitario
+                printf("\n\t\x1B[0mInformación del producto:\n"); //Se muestra como titulo con \t para dar una impresión más estética
+                printf("\x1B[0mID: %d\n", id); //Se muestra el ID ingresado
+                printf("\x1B[0mNombre: %s", nombre); //Se muestra el nombre ingresado
+                printf("\x1B[0mStock disponible: %d\n", stock); //Se muestra el stock actual
+                printf("\x1B[0mPrecio unitario: $ %.2f\n", precio); //Se muestra el precio uinitario
                 break;
             case 4:
-                printf("\nTotal de ganancias: $%.2f\n", total_ganancias); //Se despliega la cantidad acumulada de las anteriores ventas realizadas en el programa
+                printf("\n\x1B[0mTotal de ganancias: $%.2f\n", total_ganancias); //Se despliega la cantidad acumulada de las anteriores ventas realizadas en el programa
                 break;
             case 5:
-                printf("\nSaliendo del programa...\n"); //Si el usuario decide terminar el programa, se muestra este mensaje
+                printf("\n\x1B[0mSaliendo del programa...\n"); //Si el usuario decide terminar el programa, se muestra este mensaje
                 break;
             default:
-                printf("\nOpción inválida. Intente nuevamente.\n"); //Si se ingresa una opción invalida se despliega este mensaje
+                printf("\n\x1B[33mOpción inválida. Intente nuevamente.\n"); //Si se ingresa una opción invalida se despliega este mensaje
         }
     } while (opcion != 5); 
 
