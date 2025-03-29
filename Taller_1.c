@@ -13,7 +13,7 @@ el programa debe permitir ventas del producto con restricciones de stock, reabas
 int main() {
     //Declaración de variables 
     int id, stock, cantidad, opcion, valido;
-    float precio, total_ganancias = 0, ventas;
+    float precio, total_ganancias = 0, ventas, descuento, ventas_des;
     char nombre[30];
     //Presentación del programa
     printf("\t*****************************\n");
@@ -68,7 +68,20 @@ int main() {
                     printf("\nNo hay suficiente stock, por favor reabastecer\n");
                     break;
                 }
-                printf("\nSu stock actual es de %d unidades", stock); //Se despliega la cantidad de stock actual
+                printf("\nSu stock actual es de %d unidades\n", stock); //Se despliega la cantidad de stock actual
+                do{
+                    printf("Ingrese el porcentaje descuento a aplicar al producto: ");
+                    valido = scanf("%f", &descuento);
+                    if (valido != 1){
+                        printf("Datos ingresados no válidos\n");
+                        fflush(stdin);
+                    } else if (descuento < 0 || descuento > 50){
+                        printf("Descuento no valido\n");
+                        fflush(stdin);
+                    } else {
+                        break;
+                    }
+                } while (1);
                 do{
                     printf("\nIngrese la cantidad a vender: ");
                     valido = scanf("%d", &cantidad);
@@ -79,10 +92,17 @@ int main() {
                         printf("La cantidad a vender supera al stock, por favor ingrese nuevamente\n");
                         fflush(stdin); // Se debe limpiar el buffer de scanf para aceptar nuevos datos
                     } else {
-                        break;
+                        break; //Si el usuario ingresa una cantidad valida se rompe la estructura repetitiva y se continua a la siguiente línea 
                     }
                 } while (1); //Ciclo do-while que valida que no se ingresen caracteres ni numeros negativos
-                ventas = (cantidad * precio); //Para calcular las ventas se necesita que se multiplique la cantidad de unidades a vender por el precio unitario
+                if (descuento > 0){
+                    ventas = (cantidad * precio);
+                    ventas_des =((cantidad * precio) * (descuento/100));
+                    ventas = ventas - ventas_des; 
+                    printf("Dio un ahorro de %.2f\n", ventas_des);
+                } else if (descuento == 0){
+                    ventas = (cantidad * precio);  //Para calcular las ventas se necesita que se multiplique la cantidad de unidades a vender por el precio unitario
+                }
                 total_ganancias+=ventas; //Se acumula los valores de las ventas en la variable total_ganancias
                 stock -= cantidad; //Se realiza una resta del stock después de cada venta
                 printf("Venta realizada. Con una ganancia de $ %.2f\n", ventas); //Mensaje informando cuanto se estima de ganancia  
@@ -96,7 +116,7 @@ int main() {
                         printf("\nLa cantidad ingresada no es valida, ingrese nuevamente\n");
                         fflush(stdin); //Se debe limpiar el buffer de scanf para permitir el ingreso de nuevos datos
                     } else {
-                        break;
+                        break; //Si el usuario ingresa una cantidad valida se rompe la estructura repetitiva y se continua a la siguiente línea 
                     }
                 } while (1); //Ciclo do-while para validar que los datos no sean ni caracteres ni menores a 0
                 if (cantidad == 0){ 
@@ -122,7 +142,7 @@ int main() {
             default:
                 printf("\nOpción inválida. Intente nuevamente.\n"); //Si se ingresa una opción invalida se despliega este mensaje
         }
-    } while (opcion != 5);
+    } while (opcion != 5); 
 
     return 0;
 }
